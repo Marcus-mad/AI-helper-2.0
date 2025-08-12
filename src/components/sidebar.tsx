@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { MessageSquare, GraduationCap, Compass, HelpCircle, Clock, ChevronDown, ChevronRight } from "lucide-react"
+import { MessageSquare, GraduationCap, Compass, HelpCircle, Clock } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
@@ -152,7 +152,7 @@ export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }
         {(["chat", "tutor", "career"] as ChatMode[]).map((mode) => (
           <div key={mode} className="space-y-2">
             <button
-              onClick={() => mode !== "chat" && handleModeChangeWrapper(mode)}
+              onClick={() => handleModeChangeWrapper(mode)}
               className={cn(
                 "w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200",
                 currentMode === mode && !isFromHistory
@@ -162,12 +162,6 @@ export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }
             >
               {getModeIcon(mode)}
               <span className="font-medium">{modeLabels[mode]}</span>
-              {mode === "chat" && (
-                <ChevronDown className={cn(
-                  "w-4 h-4 ml-auto transition-transform",
-                  currentMode === "chat" && !isFromHistory ? "rotate-180" : ""
-                )} />
-              )}
             </button>
             
           </div>

@@ -230,21 +230,6 @@ export function ChatArea({ mode, subMode, onSubModeChange }: ChatAreaProps) {
           </div>
         </div>
 
-        {/* Suggestions */}
-        {getCurrentSuggestions().length > 0 && (
-          <div className="p-6 bg-gradient-subtle">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-4xl mx-auto">
-              {getCurrentSuggestions().map((suggestion, index) => (
-                <SuggestionCard
-                  key={index}
-                  title={suggestion}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Chat Messages Area */}
         <div className="flex-1 p-6 overflow-auto">
           <div className="max-w-4xl mx-auto space-y-4">
@@ -267,30 +252,47 @@ export function ChatArea({ mode, subMode, onSubModeChange }: ChatAreaProps) {
         </div>
 
         {/* Input Area */}
-        <div className="p-6 border-t border-border bg-white/80 backdrop-blur-sm">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex gap-3 items-end">
-              <div className="flex-1">
-                <Textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Напишите ваш вопрос..."
-                  className="min-h-[60px] max-h-[120px] resize-none border-border/50 focus:border-primary"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault()
-                      handleSendMessage()
-                    }
-                  }}
-                />
+        <div className="border-t border-border bg-white/80 backdrop-blur-sm">
+          {/* Suggestions */}
+          {getCurrentSuggestions().length > 0 && (
+            <div className="p-6 pb-3 bg-gradient-subtle border-t border-border">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-4xl mx-auto">
+                {getCurrentSuggestions().map((suggestion, index) => (
+                  <SuggestionCard
+                    key={index}
+                    title={suggestion}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  />
+                ))}
               </div>
-              <Button
-                onClick={handleSendMessage}
-                disabled={!message.trim()}
-                className="p-3 h-[60px] bg-gradient-primary hover:shadow-glow transition-all duration-300"
-              >
-                <Send className="w-5 h-5" />
-              </Button>
+            </div>
+          )}
+          
+          <div className="p-6">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex gap-3 items-end">
+                <div className="flex-1">
+                  <Textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Напишите ваш вопрос..."
+                    className="min-h-[60px] max-h-[120px] resize-none border-border/50 focus:border-primary"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault()
+                        handleSendMessage()
+                      }
+                    }}
+                  />
+                </div>
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!message.trim()}
+                  className="p-3 h-[60px] bg-gradient-primary hover:shadow-glow transition-all duration-300"
+                >
+                  <Send className="w-5 h-5" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
