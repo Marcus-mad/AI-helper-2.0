@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
-import educationBg from "@/assets/education-ai-bg.png"
 
 interface ChatAreaProps {
   mode: "chat" | "tutor" | "career" | "support"
   subMode?: "information" | "text" | null
+  onSubModeChange?: (subMode: "information" | "text") => void
 }
 
 const suggestions = {
@@ -43,7 +43,7 @@ const suggestions = {
   ]
 }
 
-export function ChatArea({ mode, subMode }: ChatAreaProps) {
+export function ChatArea({ mode, subMode, onSubModeChange }: ChatAreaProps) {
   const [message, setMessage] = useState("")
   const [supportForm, setSupportForm] = useState({
     name: "Иван Петров",
@@ -72,14 +72,6 @@ export function ChatArea({ mode, subMode }: ChatAreaProps) {
   }
 
   const getHeaderText = () => {
-    if (mode === "chat" && subMode) {
-      const subModeLabels = {
-        information: "Работа с информацией",
-        text: "Работа с текстом"
-      }
-      return `Болталка с ИИ • ${subModeLabels[subMode]}`
-    }
-    
     const modeLabels = {
       chat: "Болталка с ИИ",
       tutor: "Тьютор",
@@ -90,16 +82,26 @@ export function ChatArea({ mode, subMode }: ChatAreaProps) {
     return modeLabels[mode]
   }
 
+  const getInitialMessage = () => {
+    if (mode === "chat" && subMode === "information") {
+      return "Привет! Я помогу тебе найти любую информацию. О чём хочешь узнать?"
+    }
+    if (mode === "chat" && subMode === "text") {
+      return "Привет! Я помогу с работой над текстами. Что будем писать или редактировать?"
+    }
+    if (mode === "tutor") {
+      return "Привет! Я твой персональный тьютор. По какому предмету нужна помощь?"
+    }
+    if (mode === "career") {
+      return "Привет! Я помогу с профориентацией. Давай обсудим твои интересы и найдём подходящую карьеру!"
+    }
+    return ""
+  }
+
   if (mode === "support") {
     return (
-      <div className="flex-1 flex flex-col relative">
-        {/* Background */}
-        <div 
-          className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${educationBg})` }}
-        />
-        
-        <div className="relative z-10 flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col">
           {/* Header */}
           <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm">
             <h1 className="text-2xl font-bold text-foreground">Обратиться в поддержку</h1>
@@ -198,23 +200,34 @@ export function ChatArea({ mode, subMode }: ChatAreaProps) {
   }
 
   return (
-    <div className="flex-1 flex flex-col relative">
-      {/* Background */}
-      <div 
-        className="absolute inset-0 opacity-5 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${educationBg})` }}
-      />
-      
-      <div className="relative z-10 flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm">
-          <h1 className="text-2xl font-bold text-foreground">{getHeaderText()}</h1>
-          <p className="text-muted-foreground mt-1">
-            {mode === "chat" && subMode === "information" && "Найдите любую информацию и получите подробные ответы"}
-            {mode === "chat" && subMode === "text" && "Работайте с текстами: пишите, редактируйте, анализируйте"}
-            {mode === "tutor" && "Персональный помощник для изучения любых предметов"}
-            {mode === "career" && "Найдите свой путь в профессиональном развитии"}
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">{getHeaderText()}</h1>
+              <p className="text-muted-foreground mt-1">
+                {mode === "chat" && subMode === "information" && "Найдите любую информацию и получите подробные ответы"}
+                {mode === "chat" && subMode === "text" && "Работайте с текстами: пишите, редактируйте, анализируйте"}
+                {mode === "tutor" && "Персональный помощник для изучения любых предметов"}
+                {mode === "career" && "Найдите свой путь в профессиональном развитии"}
+              </p>
+            </div>
+            {mode === "chat" && onSubModeChange && (
+              <div className="w-64">
+                <Select value={subMode || ""} onValueChange={(value) => onSubModeChange(value as "information" | "text")}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Выберите режим работы" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="information">Работа с информацией</SelectItem>
+                    <SelectItem value="text">Работа с текстом</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Suggestions */}
@@ -234,9 +247,19 @@ export function ChatArea({ mode, subMode }: ChatAreaProps) {
 
         {/* Chat Messages Area */}
         <div className="flex-1 p-6 overflow-auto">
-          <div className="max-w-4xl mx-auto">
-            {message.trim() && (
+          <div className="max-w-4xl mx-auto space-y-4">
+            {getInitialMessage() && (
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-card animate-fade-in">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">AI</span>
+                  </div>
+                  <p className="text-foreground flex-1">{getInitialMessage()}</p>
+                </div>
+              </div>
+            )}
+            {message.trim() && (
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-card animate-fade-in ml-8">
                 <p className="text-foreground">{message}</p>
               </div>
             )}

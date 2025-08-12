@@ -11,6 +11,10 @@ const Index = () => {
     setCurrentSubMode(subMode || null)
   }
 
+  const handleSubModeChange = (subMode: ChatSubMode) => {
+    setCurrentSubMode(subMode)
+  }
+
   const handleNewChat = () => {
     setCurrentMode("chat")
     setCurrentSubMode(null)
@@ -28,16 +32,16 @@ const Index = () => {
         {/* Main Header */}
         <div className="p-6 bg-white/90 backdrop-blur-sm border-b border-border">
           <div className="max-w-4xl">
-            <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
+            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-1">
               AI-помощник для учебы
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-base text-muted-foreground">
               Решай задачи, пиши конспекты и проходи тесты — всё в одном месте
             </p>
           </div>
         </div>
         
-        <ChatArea mode={currentMode} subMode={currentSubMode} />
+        <ChatArea mode={currentMode} subMode={currentSubMode} onSubModeChange={handleSubModeChange} />
       </div>
     </div>
   );

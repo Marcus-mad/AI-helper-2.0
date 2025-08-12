@@ -56,11 +56,48 @@ const chatHistory: ChatHistory[] = [
   }
 ]
 
+const additionalHistory: ChatHistory[] = [
+  {
+    id: "6",
+    title: "Подготовка к экзамену по истории",
+    mode: "tutor",
+    lastActivity: "4 дня назад"
+  },
+  {
+    id: "7",
+    title: "Создание презентации",
+    mode: "chat",
+    subMode: "text",
+    lastActivity: "5 дней назад"
+  },
+  {
+    id: "8",
+    title: "Выбор специальности в университете",
+    mode: "career",
+    lastActivity: "1 неделю назад"
+  },
+  {
+    id: "9",
+    title: "Изучение английской грамматики",
+    mode: "tutor",
+    lastActivity: "1 неделю назад"
+  },
+  {
+    id: "10",
+    title: "Исследование о космосе",
+    mode: "chat",
+    subMode: "information",
+    lastActivity: "2 недели назад"
+  }
+]
+
 export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }: SidebarProps) {
   const [showAllHistory, setShowAllHistory] = useState(false)
   const [selectedHistoryId, setSelectedHistoryId] = useState<string | null>(null)
+  const [isFromHistory, setIsFromHistory] = useState(false)
   
-  const visibleHistory = showAllHistory ? chatHistory : chatHistory.slice(0, 5)
+  const allHistory = [...chatHistory, ...additionalHistory]
+  const visibleHistory = showAllHistory ? allHistory : chatHistory
 
   const modeIcons = {
     chat: MessageSquare,
@@ -87,7 +124,14 @@ export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }
 
   const handleHistoryClick = (item: ChatHistory) => {
     setSelectedHistoryId(item.id)
+    setIsFromHistory(true)
     onModeChange(item.mode, item.subMode)
+  }
+
+  const handleModeChangeWrapper = (mode: ChatMode, subMode?: ChatSubMode) => {
+    setIsFromHistory(false)
+    setSelectedHistoryId(null)
+    onModeChange(mode, subMode)
   }
 
   return (
@@ -108,10 +152,10 @@ export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }
         {(["chat", "tutor", "career"] as ChatMode[]).map((mode) => (
           <div key={mode} className="space-y-2">
             <button
-              onClick={() => mode !== "chat" && onModeChange(mode)}
+              onClick={() => mode !== "chat" && handleModeChangeWrapper(mode)}
               className={cn(
                 "w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200",
-                currentMode === mode
+                currentMode === mode && !isFromHistory
                   ? "bg-primary/10 text-primary border border-primary/20"
                   : "hover:bg-secondary/50 text-foreground/70"
               )}
@@ -121,24 +165,11 @@ export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }
               {mode === "chat" && (
                 <ChevronDown className={cn(
                   "w-4 h-4 ml-auto transition-transform",
-                  currentMode === "chat" ? "rotate-180" : ""
+                  currentMode === "chat" && !isFromHistory ? "rotate-180" : ""
                 )} />
               )}
             </button>
             
-            {mode === "chat" && currentMode === "chat" && (
-              <div className="ml-6 animate-fade-in">
-                <Select value={currentSubMode || ""} onValueChange={handleChatSubModeChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Выберите режим работы" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="information">Работа с информацией</SelectItem>
-                    <SelectItem value="text">Работа с текстом</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
           </div>
         ))}
       </div>
@@ -162,38 +193,33 @@ export function Sidebar({ currentMode, currentSubMode, onModeChange, onNewChat }
                   : "hover:bg-secondary/30"
               )}
             >
-              <div className="flex items-start gap-2">
-                {getModeIcon(item.mode)}
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground/80 truncate">
-                    {item.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {item.lastActivity}
-                  </p>
-                </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground/80 truncate">
+                  {item.title}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {item.lastActivity}
+                </p>
               </div>
             </button>
           ))}
         </div>
 
-        {chatHistory.length > 5 && (
-          <button
-            onClick={() => setShowAllHistory(!showAllHistory)}
-            className="w-full p-2 text-sm text-primary hover:text-primary/80 transition-colors"
-          >
-            {showAllHistory ? "Скрыть" : "Показать еще"}
-          </button>
-        )}
+        <button
+          onClick={() => setShowAllHistory(!showAllHistory)}
+          className="w-full p-2 text-sm text-primary hover:text-primary/80 transition-colors"
+        >
+          {showAllHistory ? "Скрыть" : "Посмотреть еще"}
+        </button>
       </div>
 
       {/* Support */}
       <div className="p-4 border-t border-border">
         <button
-          onClick={() => onModeChange("support")}
+          onClick={() => handleModeChangeWrapper("support")}
           className={cn(
             "w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200",
-            currentMode === "support"
+            currentMode === "support" && !isFromHistory
               ? "bg-primary/10 text-primary border border-primary/20"
               : "hover:bg-secondary/50 text-foreground/70"
           )}
