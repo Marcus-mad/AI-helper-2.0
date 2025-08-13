@@ -82,7 +82,7 @@ export function ChatArea({
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm">
-            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Обратиться в поддержку</h1>
+            <h1 className="text-2xl font-bold text-foreground">Обратиться в поддержку</h1>
             <p className="text-muted-foreground mt-1">
               Опишите вашу проблему, и мы поможем её решить
             </p>
@@ -151,7 +151,7 @@ export function ChatArea({
                 </div>
               </div>
 
-              <Button className="w-full md:w-auto" disabled={!supportForm.topic || !supportForm.description.trim()}>
+              <Button disabled={!supportForm.topic || !supportForm.description.trim()} className="w-full md:w-auto my-[15px] px-0 py-[7px] mx-px">
                 Отправить обращение
               </Button>
             </div>
