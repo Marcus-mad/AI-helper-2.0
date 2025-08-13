@@ -163,7 +163,7 @@ export function ChatArea({
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="p-6 bg-white/80 backdrop-blur-sm px-[21px] py-[6px] mx-[2px] my-0">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mx-[113px]">
             <div>
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mx-0 px-px">{getHeaderText()}</h1>
               <p className="text-muted-foreground mt-1">
