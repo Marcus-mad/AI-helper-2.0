@@ -32,8 +32,8 @@ const Index = () => {
         {/* Main Header */}
         <div className="p-6 bg-white/90 backdrop-blur-sm border-b border-border">
           <div className="max-w-4xl">
-            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-1">
-              AI-помощник для учебы
+            <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-1">
+              ИИ-помощник для учебы
             </h1>
             <p className="text-base text-muted-foreground">
               Решай задачи, пиши конспекты и проходи тесты — всё в одном месте

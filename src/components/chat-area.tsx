@@ -98,6 +98,12 @@ export function ChatArea({ mode, subMode, onSubModeChange }: ChatAreaProps) {
     return ""
   }
 
+  const handleSubModeCardClick = (selectedSubMode: "information" | "text") => {
+    if (onSubModeChange) {
+      onSubModeChange(selectedSubMode)
+    }
+  }
+
   if (mode === "support") {
     return (
       <div className="flex-1 flex flex-col">
@@ -233,6 +239,50 @@ export function ChatArea({ mode, subMode, onSubModeChange }: ChatAreaProps) {
         {/* Chat Messages Area */}
         <div className="flex-1 p-6 overflow-auto">
           <div className="max-w-4xl mx-auto space-y-4">
+            {/* Chat mode submode selection */}
+            {mode === "chat" && !subMode && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-xl font-semibold text-foreground mb-2">Выберите режим работы</h2>
+                  <p className="text-muted-foreground">Что будем делать сегодня?</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                  <button
+                    onClick={() => handleSubModeCardClick("information")}
+                    className="p-6 rounded-2xl bg-white/90 backdrop-blur-sm border border-border hover:border-primary/30 shadow-card hover:shadow-soft transition-all duration-300 text-left group hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div className="space-y-3">
+                      <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
+                        <span className="text-white text-xl">🔍</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                        Работа с информацией
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Найдите любую информацию и получите подробные ответы
+                      </p>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => handleSubModeCardClick("text")}
+                    className="p-6 rounded-2xl bg-white/90 backdrop-blur-sm border border-border hover:border-primary/30 shadow-card hover:shadow-soft transition-all duration-300 text-left group hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div className="space-y-3">
+                      <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
+                        <span className="text-white text-xl">✍️</span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                        Работа с текстом
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        Работайте с текстами: пишите, редактируйте, анализируйте
+                      </p>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+
             {getInitialMessage() && (
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-card animate-fade-in">
                 <div className="flex items-start gap-3">
