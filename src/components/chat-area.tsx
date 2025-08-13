@@ -166,12 +166,7 @@ export function ChatArea({
           <div className="flex items-center justify-between mx-[113px]">
             <div>
               <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mx-0 px-px">{getHeaderText()}</h1>
-              <p className="text-muted-foreground mt-1">
-                {mode === "chat" && subMode === "information" && "Найдите любую информацию и получите подробные ответы"}
-                {mode === "chat" && subMode === "text" && "Работайте с текстами: пишите, редактируйте, анализируйте"}
-                {mode === "tutor" && "Персональный помощник для изучения любых предметов"}
-                {mode === "career" && "Найдите свой путь в профессиональном развитии"}
-              </p>
+              
             </div>
             {mode === "chat" && onSubModeChange && <div className="w-64">
                 <Select value={subMode || ""} onValueChange={value => onSubModeChange(value as "information" | "text")}>
