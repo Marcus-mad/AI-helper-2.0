@@ -151,7 +151,7 @@ export function ChatArea({
                 </div>
               </div>
 
-              <Button disabled={!supportForm.topic || !supportForm.description.trim()} className="w-full md:w-auto my-[15px] px-0 py-[7px] mx-px">
+              <Button disabled={!supportForm.topic || !supportForm.description.trim()} className="w-full md:w-auto my-[15px] px-0 py-[7px] mx-[5px]">
                 Отправить обращение
               </Button>
             </div>
