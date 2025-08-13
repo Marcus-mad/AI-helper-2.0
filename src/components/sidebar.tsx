@@ -134,7 +134,7 @@ export function Sidebar({
       </div>
 
       {/* History */}
-      <div className="flex-1 p-4 space-y-2">
+      <div className="flex-1 p-4 space-y-2 overflow-auto">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="w-4 h-4 text-muted-foreground" />
           <span className="text-sm font-medium text-muted-foreground">История диалогов</span>
@@ -158,8 +158,8 @@ export function Sidebar({
         </button>
       </div>
 
-      {/* Support */}
-      <div className="p-4 border-t border-border py-[15px] mx-[5px] my-[7px]">
+      {/* Support - Fixed to bottom */}
+      <div className="mt-auto p-4 border-t border-border">
         <button onClick={() => handleModeChangeWrapper("support")} className={cn("w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200", currentMode === "support" && !isFromHistory ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-secondary/50 text-foreground/70")}>
           {getModeIcon("support")}
           <span className="font-medium">{modeLabels.support}</span>
