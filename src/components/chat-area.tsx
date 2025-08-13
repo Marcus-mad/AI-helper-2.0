@@ -78,7 +78,7 @@ export function ChatArea({
     }
   };
   if (mode === "support") {
-    return <div className="flex-1 flex flex-col">
+    return <div className="fixed inset-0 flex flex-col justify-end items-start">{" "}
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm">
