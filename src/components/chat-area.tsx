@@ -255,7 +255,7 @@ export function ChatArea({
                   }
                 }} />
                 </div>
-                <Button onClick={handleSendMessage} disabled={!message.trim()} className="p-3 h-[60px] bg-gradient-primary hover:shadow-glow transition-all duration-300">
+                <Button onClick={handleSendMessage} disabled={!message.trim()} className="p-3 h-[60px] bg-gradient-primary hover:shadow-glow transition-all duration-300 mx-px py-0 px-[20px]">
                   <Send className="w-5 h-5" />
                 </Button>
               </div>
