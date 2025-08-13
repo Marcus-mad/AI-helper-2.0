@@ -82,7 +82,7 @@ export function ChatArea({
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm">
-            <h1 className="text-2xl font-bold text-foreground">Обратиться в поддержку</h1>
+            <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">Обратиться в поддержку</h1>
             <p className="text-muted-foreground mt-1">
               Опишите вашу проблему, и мы поможем её решить
             </p>
