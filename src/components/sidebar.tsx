@@ -159,7 +159,7 @@ export function Sidebar({
       </div>
 
       {/* Support */}
-      <div className="p-4 border-t border-border py-[15px]">
+      <div className="p-4 border-t border-border py-[15px] mx-[5px] my-[7px]">
         <button onClick={() => handleModeChangeWrapper("support")} className={cn("w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200", currentMode === "support" && !isFromHistory ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-secondary/50 text-foreground/70")}>
           {getModeIcon("support")}
           <span className="font-medium">{modeLabels.support}</span>
