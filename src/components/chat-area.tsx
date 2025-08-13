@@ -165,7 +165,7 @@ export function ChatArea({
         <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm px-[21px] py-[6px] mx-[2px] my-0">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-foreground mx-0 px-px">{getHeaderText()}</h1>
+              <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mx-0 px-px">{getHeaderText()}</h1>
               <p className="text-muted-foreground mt-1">
                 {mode === "chat" && subMode === "information" && "Найдите любую информацию и получите подробные ответы"}
                 {mode === "chat" && subMode === "text" && "Работайте с текстами: пишите, редактируйте, анализируйте"}
