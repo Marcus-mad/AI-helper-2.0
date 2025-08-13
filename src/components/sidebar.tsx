@@ -115,7 +115,7 @@ export function Sidebar({
   };
   return <div className="w-80 bg-gradient-subtle border-r border-border h-full flex flex-col">
       {/* Header */}
-      <div className="p-6 border-b border-border py-[14px]">
+      <div className="p-6 border-b border-border py-[15px]">
         <button onClick={onNewChat} className="w-full p-3 bg-gradient-primary text-primary-foreground rounded-2xl font-medium
                    hover:shadow-glow transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
           + Новый диалог
@@ -159,7 +159,7 @@ export function Sidebar({
       </div>
 
       {/* Support */}
-      <div className="p-4 border-t border-border">
+      <div className="p-4 border-t border-border py-[15px]">
         <button onClick={() => handleModeChangeWrapper("support")} className={cn("w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200", currentMode === "support" && !isFromHistory ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-secondary/50 text-foreground/70")}>
           {getModeIcon("support")}
           <span className="font-medium">{modeLabels.support}</span>

@@ -249,7 +249,7 @@ export function ChatArea({
               </div>
             </div>}
           
-          <div className="p-6">
+          <div className="p-6 py-[15px]">
             <div className="max-w-4xl mx-auto">
               <div className="flex gap-3 items-end">
                 <div className="flex-1">
