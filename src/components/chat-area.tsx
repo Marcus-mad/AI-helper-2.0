@@ -135,7 +135,7 @@ export function ChatArea({
 
               <div>
                 <Label htmlFor="file">Прикрепить файл (скриншот, документ)</Label>
-                <div className="mt-1 flex items-center gap-2">
+                <div className="mt-1 flex items-center gap-2 mx-0 px-0 py-0 my-[9px]">
                   <Input id="file" type="file" onChange={e => setSupportForm(prev => ({
                   ...prev,
                   file: e.target.files?.[0] || null
@@ -151,7 +151,7 @@ export function ChatArea({
                 </div>
               </div>
 
-              <Button disabled={!supportForm.topic || !supportForm.description.trim()} className="w-full md:w-auto my-[15px] px-0 py-[7px] mx-px">Отправить</Button>
+              <Button disabled={!supportForm.topic || !supportForm.description.trim()} className="w-full md:w-auto py-0 my-[11px] mx-0 px-0">Отправить</Button>
             </div>
           </div>
         </div>
