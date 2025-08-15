@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Upload, File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { SuggestionCard } from "@/components/ui/suggestion-card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 interface ChatAreaProps {
-  mode: "chat" | "tutor" | "career";
+  mode: "chat" | "tutor" | "career" | "support";
   subMode?: "information" | "text" | null;
   onSubModeChange?: (subMode: "information" | "text") => void;
 }
@@ -23,6 +26,13 @@ export function ChatArea({
   onSubModeChange
 }: ChatAreaProps) {
   const [message, setMessage] = useState("");
+  const [supportForm, setSupportForm] = useState({
+    name: "Иван Петров",
+    email: "ivan.petrov@example.com",
+    topic: "",
+    description: "",
+    file: null as File | null
+  });
   const handleSendMessage = () => {
     if (message.trim()) {
       console.log("Отправка сообщения:", message);
@@ -32,18 +42,18 @@ export function ChatArea({
   const handleSuggestionClick = (suggestion: string) => {
     setMessage(suggestion);
   };
-  const getCurrentSuggestions = (): string[] => {
+  const getCurrentSuggestions = () => {
     if (mode === "chat" && subMode) {
       return suggestions.chat[subMode] || [];
     }
-    const modeSuggestions = suggestions[mode];
-    return Array.isArray(modeSuggestions) ? modeSuggestions : [];
+    return suggestions[mode] || [];
   };
   const getHeaderText = () => {
     const modeLabels = {
       chat: "Болталка с ИИ",
       tutor: "Тьютор",
-      career: "Профориентация"
+      career: "Профориентация",
+      support: "Обратиться в поддержку"
     };
     return modeLabels[mode];
   };
@@ -67,6 +77,86 @@ export function ChatArea({
       onSubModeChange(selectedSubMode);
     }
   };
+  if (mode === "support") {
+    return <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col">
+          {/* Header */}
+          <div className="p-6 border-b border-border bg-white/80 backdrop-blur-sm">
+            <h1 className="text-2xl font-bold text-foreground">Обратиться в поддержку</h1>
+            <p className="text-muted-foreground mt-1">
+              Опишите вашу проблему, и мы поможем её решить
+            </p>
+          </div>
+
+          {/* Support Form */}
+          <div className="flex-1 p-6 overflow-auto">
+            <div className="max-w-2xl mx-auto space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-0 py-[50px] my-[25px]">
+                <div>
+                  <Label htmlFor="name">Ваше имя</Label>
+                  <Input id="name" value={supportForm.name} onChange={e => setSupportForm(prev => ({
+                  ...prev,
+                  name: e.target.value
+                }))} className="mt-1" />
+                </div>
+                <div>
+                  <Label htmlFor="email">Email для ответа</Label>
+                  <Input id="email" type="email" value={supportForm.email} onChange={e => setSupportForm(prev => ({
+                  ...prev,
+                  email: e.target.value
+                }))} className="mt-1" />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="topic">Тема обращения</Label>
+                <Select value={supportForm.topic} onValueChange={value => setSupportForm(prev => ({
+                ...prev,
+                topic: value
+              }))}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Выберите тему" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="platform-error">Что-то не работает/не получается (ошибка в работе платформы)</SelectItem>
+                    <SelectItem value="content-error">Вопрос по контенту (ошибка в контенте платформы)</SelectItem>
+                    <SelectItem value="ai-error">Ошибки в ИИ функционале</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="description">Описание проблемы</Label>
+                <Textarea id="description" value={supportForm.description} onChange={e => setSupportForm(prev => ({
+                ...prev,
+                description: e.target.value
+              }))} placeholder="Подробно опишите вашу проблему..." className="mt-1 min-h-[120px]" />
+              </div>
+
+              <div>
+                <Label htmlFor="file">Прикрепить файл (скриншот, документ)</Label>
+                <div className="mt-1 flex items-center gap-2 mx-0 px-0 py-0 my-[9px]">
+                  <Input id="file" type="file" onChange={e => setSupportForm(prev => ({
+                  ...prev,
+                  file: e.target.files?.[0] || null
+                }))} className="hidden" />
+                  <Button variant="outline" onClick={() => document.getElementById('file')?.click()} className="flex items-center gap-2">
+                    <Upload className="w-4 h-4" />
+                    Выбрать файл
+                  </Button>
+                  {supportForm.file && <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <File className="w-4 h-4" />
+                      {supportForm.file.name}
+                    </div>}
+                </div>
+              </div>
+
+              <Button disabled={!supportForm.topic || !supportForm.description.trim()} className="w-full md:w-auto py-0 my-[11px] mx-0 px-0">Отправить</Button>
+            </div>
+          </div>
+        </div>
+      </div>;
+  }
   return <div className="flex-1 flex flex-col">
       <div className="flex-1 flex flex-col">
         {/* Header */}
