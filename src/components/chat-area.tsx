@@ -208,9 +208,7 @@ export function ChatArea({
                       <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center">
                         <span className="text-white text-xl">✍️</span>
                       </div>
-                      <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                        Работа с текстом
-                      </h3>
+                      <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">Работа с контентом</h3>
                       <p className="text-sm text-muted-foreground">
                         Работайте с текстами: пишите, редактируйте, анализируйте
                       </p>
