@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageSquare, GraduationCap, Compass, HelpCircle, Clock } from "lucide-react";
+import { MessageSquare, GraduationCap, Compass, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 export type ChatMode = "chat" | "tutor" | "career";
