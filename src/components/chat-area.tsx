@@ -91,7 +91,7 @@ export function ChatArea({
           {/* Support Form */}
           <div className="flex-1 p-6 overflow-auto">
             <div className="max-w-2xl mx-auto space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-0 py-[50px] my-[25px]">
                 <div>
                   <Label htmlFor="name">Ваше имя</Label>
                   <Input id="name" value={supportForm.name} onChange={e => setSupportForm(prev => ({

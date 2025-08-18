@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { MessageSquare, GraduationCap, Compass, HelpCircle, Clock } from "lucide-react";
+import { MessageSquare, GraduationCap, Compass, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-export type ChatMode = "chat" | "tutor" | "career" | "support";
+export type ChatMode = "chat" | "tutor" | "career";
 export type ChatSubMode = "information" | "text" | null;
 interface ChatHistory {
   id: string;
@@ -87,14 +87,12 @@ export function Sidebar({
   const modeIcons = {
     chat: MessageSquare,
     tutor: GraduationCap,
-    career: Compass,
-    support: HelpCircle
+    career: Compass
   };
   const modeLabels = {
     chat: "Болталка с ИИ",
     tutor: "Тьютор",
-    career: "Профориентация",
-    support: "Обратиться в поддержку"
+    career: "Профориентация"
   };
   const getModeIcon = (mode: ChatMode) => {
     const Icon = modeIcons[mode];
@@ -158,12 +156,5 @@ export function Sidebar({
         </button>
       </div>
 
-      {/* Support - Fixed to bottom */}
-      <div className="mt-auto p-4 border-t border-border">
-        <button onClick={() => handleModeChangeWrapper("support")} className={cn("w-full p-3 rounded-xl flex items-center gap-3 text-left transition-all duration-200", currentMode === "support" && !isFromHistory ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-secondary/50 text-foreground/70")}>
-          {getModeIcon("support")}
-          <span className="font-medium">{modeLabels.support}</span>
-        </button>
-      </div>
     </div>;
 }
